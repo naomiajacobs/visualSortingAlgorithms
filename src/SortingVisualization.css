@@ -1,14 +1,14 @@
 .cell {
   height: inherit;
-  width: 5px;
+  width: 6px;
 }
 
 .row {
-  width: 500px;
-  height: 5px;
+  width: 600px;
+  height: 6px;
   display: flex;
 }
 
-.visualization {
-  
+.sortButton {
+  margin: 10px;
 }

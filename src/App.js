@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
-import logo from './logo.svg';
 import './App.css';
 import SortingVisualization from './SortingVisualization';
+import sortingFunctions from './sortingFunctions';
 
 class App extends Component {
   render() {
@@ -13,7 +13,7 @@ class App extends Component {
         <div className="options">
           <button>Bubble Sort</button>
         </div>
-        <SortingVisualization />
+        <SortingVisualization sort={sortingFunctions.bubbleSort} />
       </div>
     );
   }
