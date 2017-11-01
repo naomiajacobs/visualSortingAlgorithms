@@ -1,4 +1,7 @@
-let temp, swappingAt, callback, rows;
+let temp, callback, rows;
+let stillSwapping = true;
+let swappingAt = 0;
+let madeSwap = false;
 
 function swap(row, indexA, indexB) {
   temp = row[indexB];
@@ -6,57 +9,41 @@ function swap(row, indexA, indexB) {
   row[indexA] = temp;
 }
 
-function stillSwapping() {
-  return rows.filter(row => !row.finishedSorting).length;
+function extractHue(hslString) {
+  return +hslString.split(',')[0].substring(4);
+}
+
+function swapAtIndexIfNeeded(row) {
+  const first = extractHue(row[swappingAt]);
+  const second = extractHue(row[swappingAt + 1]);
+  if (second > first) {
+    swap(row, swappingAt, swappingAt + 1);
+    madeSwap = true;
+  }
 }
 
 function sortStep() {
-  rows.forEach((rowData) => {
-    if (rowData.finishedSorting) { return; }
+  rows.forEach(swapAtIndexIfNeeded);
 
-    const { row } = rowData;
-    const first = row[swappingAt];
-    const second = row[swappingAt + 1];
-    if (second > first) {
-      swap(row, swappingAt, swappingAt + 1);
-      rowData.madeSwap = true;
-    }
-
-    if (swappingAt === 99) {
-      if (!row.madeSwap) {
-        rowData.finishedSorting = true;
-      } else {
-        row.madeSwap = false;
-      }
-    }
-  });
-
-  if (swappingAt === 99) {
+  if (swappingAt === 98) {
     swappingAt = 0;
+    if (!madeSwap) {
+      stillSwapping = false;
+    } else {
+      madeSwap = false;
+    }
   } else {
     swappingAt++;
   }
 
-  callback(rows.map(rowData => rowData.row));
-
-  if (stillSwapping(rows)) {
-    setTimeout(() => sortStep(), 0);
-  }
+  callback(rows);
 }
 
 function bubbleSort(inputRows, updateCB) {
-  rows = inputRows.map(row => {
-    return {
-      madeSwap: false,
-      finishedSorting: false,
-      row: row,
-    };
-  });
-
-  swappingAt = 0;
+  rows = inputRows;
   callback = updateCB;
 
-  sortStep();
+  while(stillSwapping) { sortStep(); }
 }
 
 export default {

@@ -21,8 +21,15 @@ class SortingVisualization extends Component {
     this.setState({ rows: newRows });
   }
 
+  rand(min, max) {
+    return parseInt(Math.random() * (max-min+1), 10) + min;
+  }
+
   generateRandomColor() {
-    return '#'+Math.floor(Math.random()*16777215).toString(16);
+    var h = this.rand(1, 360); // color hue between 1 and 360
+    var s = 90; // saturation 100%
+    var l = 50; // lightness 50%
+    return 'hsl(' + h + ',' + s + '%,' + l + '%)';
   }
 
   createRow() {
