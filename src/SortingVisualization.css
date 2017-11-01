@@ -1,11 +1,11 @@
 .cell {
   height: inherit;
-  width: 6px;
+  width: 5px;
 }
 
 .row {
-  width: 600px;
-  height: 6px;
+  width: 500px;
+  height: 5px;
   display: flex;
 }
 
