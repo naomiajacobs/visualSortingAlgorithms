@@ -1,0 +1,14 @@
+.cell {
+  height: inherit;
+  width: 5px;
+}
+
+.row {
+  width: 500px;
+  height: 5px;
+  display: flex;
+}
+
+.visualization {
+  
+}
