@@ -4,6 +4,17 @@ import SortingVisualization from './SortingVisualization';
 import sortingFunctions from './sortingFunctions';
 
 class App extends Component {
+  constructor() {
+    super();
+    this.state = { sortingMethod: 'bubble' }
+    this.onChange = this.onChange.bind(this);
+  }
+
+  onChange(event) {
+    console.log(event.target.value);
+    this.setState({ sortingMethod: event.target.value });
+  }
+
   render() {
     return (
       <div className="App">
@@ -11,9 +22,11 @@ class App extends Component {
           <h1 className="App-title">Visual Sorting Algorithms</h1>
         </header>
         <div className="options">
-          <button>Bubble Sort</button>
+          <select onChange={this.onChange} >
+            <option value="bubble">Bubble</option>
+          </select>
         </div>
-        <SortingVisualization sort={sortingFunctions.bubbleSort} />
+        <SortingVisualization sort={sortingFunctions[this.state.sortingMethod]} />
       </div>
     );
   }

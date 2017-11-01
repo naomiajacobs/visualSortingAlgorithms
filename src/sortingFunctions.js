@@ -39,7 +39,7 @@ function sortStep() {
   callback(rows);
 }
 
-function bubbleSort(inputRows, updateCB) {
+function bubble(inputRows, updateCB) {
   rows = inputRows;
   callback = updateCB;
 
@@ -47,5 +47,5 @@ function bubbleSort(inputRows, updateCB) {
 }
 
 export default {
-  bubbleSort,
+  bubble,
 };
