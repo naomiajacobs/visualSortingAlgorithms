@@ -23,7 +23,7 @@ function sortStep() {
   rows.forEach(iterateOnRow);
   callback(rows);
 
-  if (swappingAt === 48) {
+  if (swappingAt === rows.length - 2) {
     swappingAt = 0;
     if (!madeSwap) {
       stillSwapping = false;
