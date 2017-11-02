@@ -27,14 +27,12 @@ class SortingVisualization extends Component {
 
   generateRandomColor() {
     var h = this.rand(1, 360); // color hue between 1 and 360
-    var s = 90; // saturation 100%
-    var l = 50; // lightness 50%
-    return 'hsl(' + h + ',' + s + '%,' + l + '%)';
+    return `hsl(${h},90%,50%)`;
   }
 
   createRow() {
     const rowState = [];
-    for (let i = 0; i < 100; i++) {
+    for (let i = 0; i < 50; i++) {
       rowState.push(this.generateRandomColor());
     }
     return rowState;
@@ -42,7 +40,7 @@ class SortingVisualization extends Component {
 
   createRows() {
     const rows = [];
-    for (let i = 0; i < 100; i++) {
+    for (let i = 0; i < 50; i++) {
       rows.push(this.createRow());
     }
     return rows;

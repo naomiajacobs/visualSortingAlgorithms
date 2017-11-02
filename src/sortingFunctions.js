@@ -25,7 +25,7 @@ function swapAtIndexIfNeeded(row) {
 function sortStep() {
   rows.forEach(swapAtIndexIfNeeded);
 
-  if (swappingAt === 98) {
+  if (swappingAt === 48) {
     swappingAt = 0;
     if (!madeSwap) {
       stillSwapping = false;
