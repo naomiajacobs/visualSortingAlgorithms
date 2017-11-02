@@ -1,29 +1,26 @@
+import utils from './utils';
+
 let temp, callback, rows;
 let stillSwapping = true;
 let swappingAt = 0;
 let madeSwap = false;
 
-function swap(row, indexA, indexB) {
-  temp = row[indexB];
-  row[indexB] = row[indexA];
-  row[indexA] = temp;
-}
-
-function extractHue(hslString) {
-  return +hslString.split(',')[0].substring(4);
-}
-
 function swapAtIndexIfNeeded(row) {
-  const first = extractHue(row[swappingAt]);
-  const second = extractHue(row[swappingAt + 1]);
+  const first = utils.extractHue(row[swappingAt]);
+  const second = utils.extractHue(row[swappingAt + 1]);
   if (second > first) {
-    swap(row, swappingAt, swappingAt + 1);
-    madeSwap = true;
+    utils.swap(row, swappingAt, swappingAt + 1);
+    return true;
   }
 }
 
+function iterateOnRow(row) {
+  const didSwap = swapAtIndexIfNeeded(row);
+  if (!madeSwap && didSwap) { madeSwap = true; }
+}
+
 function sortStep() {
-  rows.forEach(swapAtIndexIfNeeded);
+  rows.forEach(iterateOnRow);
   callback(rows);
 
   if (swappingAt === 48) {
@@ -47,6 +44,4 @@ function bubble(inputRows, updateCB) {
   sortStep();
 }
 
-export default {
-  bubble,
-};
+export default bubble;

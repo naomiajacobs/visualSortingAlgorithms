@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
 import './App.css';
 import SortingVisualization from './SortingVisualization';
-import sortingFunctions from './sortingFunctions';
+import sortingFunctions from './sortingFunctions/index';
 
 class App extends Component {
   constructor() {
