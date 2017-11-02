@@ -24,6 +24,7 @@ function swapAtIndexIfNeeded(row) {
 
 function sortStep() {
   rows.forEach(swapAtIndexIfNeeded);
+  callback(rows);
 
   if (swappingAt === 48) {
     swappingAt = 0;
@@ -36,14 +37,14 @@ function sortStep() {
     swappingAt++;
   }
 
-  callback(rows);
+  if (stillSwapping) { setTimeout(sortStep, 0); }
 }
 
 function bubble(inputRows, updateCB) {
   rows = inputRows;
   callback = updateCB;
 
-  while(stillSwapping) { sortStep(); }
+  sortStep();
 }
 
 export default {
