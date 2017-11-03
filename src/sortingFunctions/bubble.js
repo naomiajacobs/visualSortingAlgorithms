@@ -19,10 +19,7 @@ function iterateOnRow(row) {
   if (!madeSwap && didSwap) { madeSwap = true; }
 }
 
-function sortStep() {
-  rows.forEach(iterateOnRow);
-  callback(rows);
-
+function cleanup() {
   if (swappingAt === endIndex) {
     swappingAt = 0;
     endIndex = endIndex === 0 ? 0 : endIndex - 1;
@@ -34,6 +31,13 @@ function sortStep() {
   } else {
     swappingAt++;
   }
+}
+
+function sortStep() {
+  rows.forEach(iterateOnRow);
+  callback(rows);
+
+  cleanup();
 
   if (stillSwapping) { setTimeout(sortStep, 0); }
 }
