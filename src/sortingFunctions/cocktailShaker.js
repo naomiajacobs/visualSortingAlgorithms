@@ -1,23 +1,23 @@
 import utils from './utils';
 
-let callback, rows, didSwap, frontIndex, backIndex, nextMethod;
+let callback, rows, didSwap, frontIndex, tempFrontIndex, backIndex, tempBackIndex, nextMethod;
 let stillSwapping = true;
 let madeSwap = false;
 
 function swapForward(row) {
-  const first = utils.extractHue(row[frontIndex]);
-  const second = utils.extractHue(row[frontIndex + 1]);
+  const first = utils.extractHue(row[tempFrontIndex]);
+  const second = utils.extractHue(row[tempFrontIndex + 1]);
   if (second > first) {
-    utils.swap(row, frontIndex, frontIndex + 1);
+    utils.swap(row, tempFrontIndex, tempFrontIndex + 1);
     return true;
   }
 }
 
 function swapBackward(row) {
-  const first = utils.extractHue(row[backIndex]);
-  const second = utils.extractHue(row[backIndex - 1]);
+  const first = utils.extractHue(row[tempBackIndex]);
+  const second = utils.extractHue(row[tempBackIndex - 1]);
   if (second < first) {
-    utils.swap(row, backIndex, backIndex - 1);
+    utils.swap(row, tempBackIndex, tempBackIndex - 1);
     return true;
   }
 }
@@ -44,22 +44,26 @@ function cleanupSwapVariables() {
 }
 
 function cleanupForward() {
-  if (frontIndex === backIndex) {
-    frontIndex = rows.length - backIndex - 1;
+  if (tempFrontIndex === backIndex) {
+    tempBackIndex = backIndex;
+    tempFrontIndex = frontIndex;
+    backIndex--;
     cleanupSwapVariables();
     nextMethod = iterateBackward;
   } else {
-    frontIndex++;
+    tempFrontIndex++;
   }
 }
 
 function cleanupBackward() {
-  if (backIndex === frontIndex) {
-    backIndex = rows.length - frontIndex - 1;
+  if (tempBackIndex === frontIndex + 1) {
+    tempFrontIndex = frontIndex;
+    tempBackIndex = backIndex;
+    frontIndex++;
     cleanupSwapVariables();
     nextMethod = iterateForward;
   } else {
-    backIndex--;
+    tempBackIndex--;
   }
 }
 
@@ -68,8 +72,6 @@ function cleanup(method) {
 }
 
 function sortStep(method) {
-  console.log(`frontIndex: ${frontIndex}`);
-  console.log(`backIndex: ${backIndex}`);
   rows.forEach(method);
   callback(rows);
 
@@ -81,8 +83,8 @@ function sortStep(method) {
 function cocktailShaker(inputRows, updateCB) {
   rows = inputRows;
   callback = updateCB;
-  frontIndex = 0;
-  backIndex = rows.length - 2;
+  frontIndex = tempFrontIndex = 0;
+  backIndex = tempBackIndex = rows.length - 2;
   nextMethod = iterateForward;
   sortStep(nextMethod);
 }
