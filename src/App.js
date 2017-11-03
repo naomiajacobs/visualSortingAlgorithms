@@ -24,6 +24,7 @@ class App extends Component {
         <div className="options">
           <select onChange={this.onChange} >
             <option value="bubble">Bubble</option>
+            <option value="cocktailShaker">Cocktail Shaker</option>
           </select>
         </div>
         <SortingVisualization sort={sortingFunctions[this.state.sortingMethod]} />
