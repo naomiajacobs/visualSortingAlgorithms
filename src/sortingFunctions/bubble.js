@@ -1,6 +1,6 @@
 import utils from './utils';
 
-let temp, callback, rows;
+let callback, rows, endIndex;
 let stillSwapping = true;
 let swappingAt = 0;
 let madeSwap = false;
@@ -23,8 +23,9 @@ function sortStep() {
   rows.forEach(iterateOnRow);
   callback(rows);
 
-  if (swappingAt === rows.length - 2) {
+  if (swappingAt === endIndex) {
     swappingAt = 0;
+    endIndex = endIndex === 0 ? 0 : endIndex - 1;
     if (!madeSwap) {
       stillSwapping = false;
     } else {
@@ -40,7 +41,7 @@ function sortStep() {
 function bubble(inputRows, updateCB) {
   rows = inputRows;
   callback = updateCB;
-
+  endIndex = rows.length - 2
   sortStep();
 }
 
