@@ -6,11 +6,20 @@ function swap(row, indexA, indexB) {
   row[indexA] = temp;
 }
 
-function extractHue(hslString) {
-  return +hslString.split(',')[0].substring(4);
+function extractColorVariable(sortBy, hslString) {
+  switch (sortBy) {
+    case "hue":
+      return +hslString.split(',')[0].substring(4);
+    case "saturation":
+      return +hslString.split(',')[1].slice(0, -2);
+    case "lightness":
+      return +hslString.split(',')[2].slice(0, -2);
+    default:
+      return +hslString.split(',')[0].substring(4);
+  }
 }
 
 export default {
   swap,
-  extractHue,
+  extractColorVariable,
 };

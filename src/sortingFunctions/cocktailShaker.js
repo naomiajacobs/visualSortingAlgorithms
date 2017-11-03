@@ -1,12 +1,20 @@
 import utils from './utils';
 
-let callback, rows, didSwap, frontIndex, tempFrontIndex, backIndex, tempBackIndex, nextMethod;
+let callback,
+    rows,
+    didSwap,
+    frontIndex,
+    tempFrontIndex,
+    backIndex,
+    tempBackIndex,
+    nextMethod,
+    extractColorVariable;
 let stillSwapping = true;
 let madeSwap = false;
 
 function swapForward(row) {
-  const first = utils.extractHue(row[tempFrontIndex]);
-  const second = utils.extractHue(row[tempFrontIndex + 1]);
+  const first = extractColorVariable(row[tempFrontIndex]);
+  const second = extractColorVariable(row[tempFrontIndex + 1]);
   if (second > first) {
     utils.swap(row, tempFrontIndex, tempFrontIndex + 1);
     return true;
@@ -14,8 +22,8 @@ function swapForward(row) {
 }
 
 function swapBackward(row) {
-  const first = utils.extractHue(row[tempBackIndex]);
-  const second = utils.extractHue(row[tempBackIndex - 1]);
+  const first = extractColorVariable(row[tempBackIndex]);
+  const second = extractColorVariable(row[tempBackIndex - 1]);
   if (second < first) {
     utils.swap(row, tempBackIndex, tempBackIndex - 1);
     return true;
@@ -80,7 +88,8 @@ function sortStep(method) {
   if (stillSwapping) { setTimeout(() => sortStep(nextMethod), 0); }
 }
 
-function cocktailShaker(inputRows, updateCB) {
+function cocktailShaker(inputRows, updateCB, sortBy) {
+  extractColorVariable = utils.extractColorVariable.bind(null, sortBy);
   rows = inputRows;
   callback = updateCB;
   frontIndex = tempFrontIndex = 0;

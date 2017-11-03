@@ -1,13 +1,13 @@
 import utils from './utils';
 
-let callback, rows, endIndex;
+let callback, rows, endIndex, extractColorVariable;
 let stillSwapping = true;
 let swappingAt = 0;
 let madeSwap = false;
 
 function swapAtIndexIfNeeded(row) {
-  const first = utils.extractHue(row[swappingAt]);
-  const second = utils.extractHue(row[swappingAt + 1]);
+  const first = extractColorVariable(row[swappingAt]);
+  const second = extractColorVariable(row[swappingAt + 1]);
   if (second > first) {
     utils.swap(row, swappingAt, swappingAt + 1);
     return true;
@@ -42,7 +42,9 @@ function sortStep() {
   if (stillSwapping) { setTimeout(sortStep, 0); }
 }
 
-function bubble(inputRows, updateCB) {
+function bubble(inputRows, updateCB, sortBy) {
+  debugger
+  extractColorVariable = utils.extractColorVariable.bind(null, sortBy);
   rows = inputRows;
   callback = updateCB;
   endIndex = rows.length - 2

@@ -4,20 +4,26 @@ import './SortingVisualization.css';
 
 class SortingVisualization extends Component {
   constructor(props) {
-    super();
+    super(props);
     this.state = {
-      rows: this.createRows(),
+      rows: this.createRows(props.sortBy),
     };
 
     this.sort = this.sort.bind(this);
-    this.updateState = this.updateState.bind(this);
+    this.updateRows = this.updateRows.bind(this);
   }
 
   sort() {
-    this.props.sort(this.state.rows, this.updateState);
+    this.props.method(this.state.rows, this.updateRows, this.props.sortBy);
   }
 
-  updateState(newRows) {
+  componentWillReceiveProps(nextProps) {
+    if (nextProps.method !== this.props.method || nextProps.sortBy !== this.props.sortBy) {
+      this.setState({ rows: this.createRows(nextProps.sortBy) });
+    }
+  }
+
+  updateRows(newRows) {
     this.setState({ rows: newRows });
   }
 
@@ -25,23 +31,28 @@ class SortingVisualization extends Component {
     return parseInt(Math.random() * (max-min+1), 10) + min;
   }
 
-  generateRandomColor() {
-    var h = this.rand(1, 360); // color hue between 1 and 360
-    return `hsl(${h},90%,50%)`;
+  generateRandomColor(sortBy) {
+    let h = 200;
+    let s = 100;
+    let l = 50;
+    if (sortBy === 'hue') { h = this.rand(1, 360); } // color hue between 1 and 360
+    if (sortBy === 'saturation') { s = this.rand(0, 100); } // color saturation between 0 and 100
+    if (sortBy === 'lightness') { l = this.rand(0, 100); } // color lightness between 0 and 100
+    return `hsl(${h},${s}%,${l}%)`;
   }
 
-  createRow() {
+  createRow(sortBy) {
     const rowState = [];
     for (let i = 0; i < 50; i++) {
-      rowState.push(this.generateRandomColor());
+      rowState.push(this.generateRandomColor(sortBy));
     }
     return rowState;
   }
 
-  createRows() {
+  createRows(sortBy) {
     const rows = [];
     for (let i = 0; i < 50; i++) {
-      rows.push(this.createRow());
+      rows.push(this.createRow(sortBy));
     }
     return rows;
   }
@@ -61,7 +72,8 @@ class SortingVisualization extends Component {
 };
 
 SortingVisualization.propTypes = {
-  sort: PropTypes.func.isRequired,
+  method: PropTypes.func.isRequired,
+  sortBy: PropTypes.string.isRequired,
 };
 
 export default SortingVisualization;
