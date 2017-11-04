@@ -1,5 +1,6 @@
 import React, { Component } from 'react';
 import PropTypes from 'prop-types';
+import { generateRandomColor } from './sortingFunctions/utils';
 import './SortingVisualization.css';
 
 class SortingVisualization extends Component {
@@ -27,24 +28,10 @@ class SortingVisualization extends Component {
     this.setState({ rows: newRows });
   }
 
-  rand(min, max) {
-    return parseInt(Math.random() * (max-min+1), 10) + min;
-  }
-
-  generateRandomColor(sortBy) {
-    let h = 160;
-    let s = 100;
-    let l = 50;
-    if (sortBy === 'hue') { h = this.rand(1, 360); } // color hue between 1 and 360
-    if (sortBy === 'saturation') { s = this.rand(0, 100); } // color saturation between 0 and 100
-    if (sortBy === 'lightness') { l = this.rand(0, 100); } // color lightness between 0 and 100
-    return `hsl(${h},${s}%,${l}%)`;
-  }
-
   createRow(sortBy) {
     const rowState = [];
     for (let i = 0; i < 50; i++) {
-      rowState.push(this.generateRandomColor(sortBy));
+      rowState.push(generateRandomColor(sortBy));
     }
     return rowState;
   }
