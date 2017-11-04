@@ -32,7 +32,7 @@ class SortingVisualization extends Component {
   }
 
   generateRandomColor(sortBy) {
-    let h = 200;
+    let h = 160;
     let s = 100;
     let l = 50;
     if (sortBy === 'hue') { h = this.rand(1, 360); } // color hue between 1 and 360

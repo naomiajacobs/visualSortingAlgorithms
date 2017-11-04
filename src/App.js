@@ -29,14 +29,14 @@ class App extends Component {
           <h1 className="App-title">Visual Sorting Algorithms</h1>
         </header>
         <div className="options-container">
-          <div> Sorting Method:
-            <select className="options" onChange={this.changeSortingMethod} >
+          <div className="options">Sorting Method:
+            <select onChange={this.changeSortingMethod} >
               <option value="bubble">Bubble</option>
               <option value="cocktailShaker">Cocktail Shaker</option>
             </select>
           </div>
-          <div> Sort By:
-            <select className="options" onChange={this.changeSortBy} >
+          <div className="options">Sort By:
+            <select onChange={this.changeSortBy} >
               <option value="hue">Hue</option>
               <option value="saturation">Saturation</option>
               <option value="lightness">Lightness</option>
