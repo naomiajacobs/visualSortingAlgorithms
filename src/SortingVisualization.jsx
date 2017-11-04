@@ -42,7 +42,7 @@ class SortingVisualization extends Component {
 
   createRow(sortBy) {
     const rowState = [];
-    for (let i = 0; i < 100; i++) {
+    for (let i = 0; i < 40; i++) {
       rowState.push(generateRandomColor(sortBy));
     }
     return rowState;
@@ -50,13 +50,14 @@ class SortingVisualization extends Component {
 
   createRows(sortBy) {
     const rows = [];
-    for (let i = 0; i < 100; i++) {
+    for (let i = 0; i < 40; i++) {
       rows.push(this.createRow(sortBy));
     }
     return rows;
   }
 
   render() {
+    const cellDimension = `${500/40}px`;
     return (
       <div className="visualization">
         <div className="buttonsContainer">
@@ -64,8 +65,10 @@ class SortingVisualization extends Component {
           <button onClick={this.reset}>Reset</button>
         </div>
         {this.state.rows.map((row, rowIndex) => {
-          return (<div className="row" key={rowIndex}>
-            {row.map((cell, cellIndex) => <span className="cell" key={cellIndex} style={{backgroundColor: cell}} />)}
+          return (<div className="row" style={{height: cellDimension}} key={rowIndex}>
+            {row.map((cell, cellIndex) => (
+              <span className="cell" key={cellIndex} style={{backgroundColor: cell, width: cellDimension}} />
+            ))}
           </div>);
         })}
       </div>
