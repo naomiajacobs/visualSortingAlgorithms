@@ -43,7 +43,6 @@ function sortStep() {
 }
 
 function bubble(inputRows, updateCB, sortBy) {
-  debugger
   extractColorVariable = utils.extractColorVariable.bind(null, sortBy);
   rows = inputRows;
   callback = updateCB;
