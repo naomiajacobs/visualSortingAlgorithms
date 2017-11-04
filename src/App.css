@@ -4,7 +4,8 @@
   align-items: center;
   justify-content: center;
   flex-direction: column;
-  font-family: 'Open Sans', sans-serif;
+  /*font-family: 'Open Sans', sans-serif;*/
+  font-family: 'Montserrat', sans-serif;
 }
 
 .App-header {
