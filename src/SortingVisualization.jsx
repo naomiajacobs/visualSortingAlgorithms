@@ -42,7 +42,7 @@ class SortingVisualization extends Component {
 
   createRow(sortBy) {
     const rowState = [];
-    for (let i = 0; i < 50; i++) {
+    for (let i = 0; i < 100; i++) {
       rowState.push(generateRandomColor(sortBy));
     }
     return rowState;
@@ -50,7 +50,7 @@ class SortingVisualization extends Component {
 
   createRows(sortBy) {
     const rows = [];
-    for (let i = 0; i < 50; i++) {
+    for (let i = 0; i < 100; i++) {
       rows.push(this.createRow(sortBy));
     }
     return rows;
