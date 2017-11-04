@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
 import PropTypes from 'prop-types';
-import { generateRandomColor } from './sortingFunctions/utils';
+import { generateRandomColor, randomId } from './sortingFunctions/utils';
 import './SortingVisualization.css';
 
 class SortingVisualization extends Component {
@@ -8,24 +8,36 @@ class SortingVisualization extends Component {
     super(props);
     this.state = {
       rows: this.createRows(props.sortBy),
+      currentId: randomId(),
     };
 
     this.sort = this.sort.bind(this);
+    this.reset = this.reset.bind(this);
     this.updateRows = this.updateRows.bind(this);
   }
 
   sort() {
-    this.props.method(this.state.rows, this.updateRows, this.props.sortBy);
+    this.props.method(
+      this.state.rows,
+      this.updateRows.bind(this, this.state.currentId),
+      this.props.sortBy
+    );
+  }
+
+  reset() {
+    this.setState({ rows: this.createRows(this.props.sortBy), currentId: randomId() });
   }
 
   componentWillReceiveProps(nextProps) {
     if (nextProps.method !== this.props.method || nextProps.sortBy !== this.props.sortBy) {
-      this.setState({ rows: this.createRows(nextProps.sortBy) });
+      this.setState({ rows: this.createRows(nextProps.sortBy), currentId: randomId() });
     }
   }
 
-  updateRows(newRows) {
-    this.setState({ rows: newRows });
+  updateRows(id, newRows) {
+    if (id === this.state.currentId) {
+      this.setState({ rows: newRows });
+    }
   }
 
   createRow(sortBy) {
@@ -47,7 +59,10 @@ class SortingVisualization extends Component {
   render() {
     return (
       <div className="visualization">
-        <button className="sortButton" onClick={this.sort}>Sort!</button>
+        <div className="buttonsContainer">
+          <button onClick={this.sort}>Sort!</button>
+          <button onClick={this.reset}>Reset</button>
+        </div>
         {this.state.rows.map((row, rowIndex) => {
           return (<div className="row" key={rowIndex}>
             {row.map((cell, cellIndex) => <span className="cell" key={cellIndex} style={{backgroundColor: cell}} />)}

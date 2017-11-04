@@ -33,8 +33,13 @@ export function generateRandomColor(sortBy) {
   return `hsl(${h},${s}%,${l}%)`;
 };
 
+export function randomId() {
+  return Math.random() * 1000;
+}
+
 export default {
   swap,
   extractColorVariable,
   generateRandomColor,
+  randomId,
 };

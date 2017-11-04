@@ -46,7 +46,12 @@ function bubble(inputRows, updateCB, sortBy) {
   extractColorVariable = utils.extractColorVariable.bind(null, sortBy);
   rows = inputRows;
   callback = updateCB;
-  endIndex = rows.length - 2
+  endIndex = rows.length - 2;
+
+  // reset other variables if sort is pressed again
+  stillSwapping = true;
+  swappingAt = 0;
+  madeSwap = false;
   sortStep();
 }
 
