@@ -33,6 +33,7 @@ class App extends Component {
             <select onChange={this.changeSortingMethod} >
               <option value="bubble">Bubble</option>
               <option value="cocktailShaker">Cocktail Shaker</option>
+              <option value="insertion">Insertion</option>
             </select>
           </div>
           <div className="options">Sort By:
